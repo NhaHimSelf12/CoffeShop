@@ -581,47 +581,43 @@
     <div class="rpt-page">
 
         {{-- ── PAGE HEADER ── --}}
-        <div class="page-header flex flex-col md:flex-row items-start md:items-end">
-            <div class="w-full md:w-auto mb-3 md:mb-0">
+        <div class="page-header">
+            <div>
                 <p class="page-eyebrow">{{ __('main.reports') }}</p>
                 <h1 class="page-title">{{ __('main.financial_intelligence') }}</h1>
                 <p class="page-sub">{{ __('main.financial_intelligence_sub') }}</p>
             </div>
 
-            <form action="{{ route('reports.index') }}" method="GET" class="date-form w-full md:w-auto flex flex-col md:flex-row gap-3 md:gap-2">
-                <div class="flex flex-row gap-2 w-full md:w-auto">
-                    <div class="date-field flex-1 md:flex-none h-[44px] md:h-[36px]">
-                        <span class="date-lbl">{{ __('main.from') }}</span>
-                        <input type="date" name="start_date" value="{{ $start_date->format('Y-m-d') }}" class="w-full text-[14px] md:text-[13px]">
-                    </div>
-                    <div class="date-field flex-1 md:flex-none h-[44px] md:h-[36px]">
-                        <span class="date-lbl">{{ __('main.to') }}</span>
-                        <input type="date" name="end_date" value="{{ $end_date->format('Y-m-d') }}" class="w-full text-[14px] md:text-[13px]">
-                    </div>
+            <form action="{{ route('reports.index') }}" method="GET" class="date-form">
+                <div class="date-field">
+                    <span class="date-lbl">{{ __('main.from') }}</span>
+                    <input type="date" name="start_date" value="{{ $start_date->format('Y-m-d') }}">
                 </div>
-                <div class="flex flex-col md:flex-row gap-2 w-full md:w-auto">
-                    <button type="submit" class="btn-apply w-full md:w-auto h-[44px] md:h-[36px] justify-center text-[14px] md:text-[13px]">
-                        <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
-                            <path d="M2 8a6 6 0 1012 0A6 6 0 002 8z" stroke="currentColor" stroke-width="1.6" />
-                            <path d="M13.5 13.5l2 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
-                        </svg>
-                        {{ __('main.apply') }}
-                    </button>
-                    <button type="button" class="btn-print w-full md:w-auto h-[44px] md:h-[36px] justify-center text-[14px] md:text-[13px]" onclick="window.print()">
-                        <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
-                            <rect x="3" y="1" width="10" height="6" rx="1" stroke="currentColor" stroke-width="1.4" />
-                            <path d="M3 7v6a1 1 0 001 1h8a1 1 0 001-1V7" stroke="currentColor" stroke-width="1.4" />
-                            <path d="M1 5h14v6H1z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" />
-                            <circle cx="12" cy="7.5" r="0.7" fill="currentColor" />
-                        </svg>
-                        {{ __('main.print') }}
-                    </button>
+                <div class="date-field">
+                    <span class="date-lbl">{{ __('main.to') }}</span>
+                    <input type="date" name="end_date" value="{{ $end_date->format('Y-m-d') }}">
                 </div>
+                <button type="submit" class="btn-apply">
+                    <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+                        <path d="M2 8a6 6 0 1012 0A6 6 0 002 8z" stroke="currentColor" stroke-width="1.6" />
+                        <path d="M13.5 13.5l2 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+                    </svg>
+                    {{ __('main.apply') }}
+                </button>
+                <button type="button" class="btn-print" onclick="window.print()">
+                    <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+                        <rect x="3" y="1" width="10" height="6" rx="1" stroke="currentColor" stroke-width="1.4" />
+                        <path d="M3 7v6a1 1 0 001 1h8a1 1 0 001-1V7" stroke="currentColor" stroke-width="1.4" />
+                        <path d="M1 5h14v6H1z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" />
+                        <circle cx="12" cy="7.5" r="0.7" fill="currentColor" />
+                    </svg>
+                    {{ __('main.print') }}
+                </button>
             </form>
         </div>
 
         {{-- ── STAT CARDS ── --}}
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div class="stat-row">
             <div class="stat-card">
                 <div class="stat-top">
                     <div>
@@ -700,7 +696,7 @@
         </div>
 
         {{-- ── CHART + TOP PRODUCTS ── --}}
-        <div class="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-4 mb-6 items-start">
+        <div class="mid-row">
 
             {{-- Revenue Chart --}}
             <div class="chart-card">
@@ -741,15 +737,15 @@
         </div>
 
         {{-- ── MONTHLY TABLE ── --}}
-        <div class="table-card bg-transparent md:bg-[var(--surface)] border-0 md:border md:border-[var(--border)]">
-            <div class="card-header bg-[var(--surface)] border border-[var(--border)] md:border-0 rounded-xl md:rounded-none mb-4 md:mb-0">
+        <div class="table-card">
+            <div class="card-header">
                 <h2 class="card-title">{{ __('main.monthly_performance') }}</h2>
                 <span class="chart-tag">{{ $monthly_summary->count() }}
                     {{ Str::plural(__('main.month'), $monthly_summary->count()) }}</span>
             </div>
-            <div class="overflow-x-hidden md:overflow-x-auto">
-                <table class="rpt-table block md:table w-full">
-                    <thead class="hidden md:table-header-group">
+            <div style="overflow-x: auto;">
+                <table class="rpt-table">
+                    <thead>
                         <tr>
                             <th>{{ __('main.month') }}</th>
                             <th>{{ __('main.orders') }}</th>
@@ -758,31 +754,26 @@
                             <th>{{ __('main.status') }}</th>
                         </tr>
                     </thead>
-                    <tbody class="block md:table-row-group">
+                    <tbody>
                         @forelse($monthly_summary as $month)
-                            <tr class="block md:table-row bg-[var(--surface)] border border-[var(--border)] rounded-xl mb-4 p-4 md:p-0 md:mb-0 md:border-b">
-                                <td class="flex md:table-cell justify-between items-center py-2 md:py-3 border-b border-[var(--border)] md:border-0">
-                                    <span class="md:hidden font-bold text-xs text-[var(--text3)] uppercase">{{ __('main.month') }}</span>
-                                    <div class="month-chip justify-end md:justify-start">
+                            <tr>
+                                <td>
+                                    <div class="month-chip">
                                         <div class="month-abbr">{{ substr($month->month, 0, 3) }}</div>
-                                        <span class="month-name text-[15px] md:text-[13px]">{{ $month->month }}</span>
+                                        <span class="month-name">{{ $month->month }}</span>
                                     </div>
                                 </td>
-                                <td class="flex md:table-cell justify-between items-center py-3 border-b border-[var(--border)] md:border-0">
-                                    <span class="md:hidden font-bold text-xs text-[var(--text3)] uppercase">{{ __('main.orders') }}</span>
-                                    <span class="orders-pill text-[13px] md:text-[11px] px-3 py-1">{{ $month->count }} {{ __('main.orders') }}</span>
+                                <td>
+                                    <span class="orders-pill">{{ $month->count }} {{ __('main.orders') }}</span>
                                 </td>
-                                <td class="flex md:table-cell justify-between items-center py-3 border-b border-[var(--border)] md:border-0">
-                                    <span class="md:hidden font-bold text-xs text-[var(--text3)] uppercase">{{ __('main.gross_revenue') }}</span>
-                                    <span class="revenue-val text-[15px] md:text-[13px]">$ {{ number_format($month->total, 2) }}</span>
+                                <td>
+                                    <span class="revenue-val">$ {{ number_format($month->total, 2) }}</span>
                                 </td>
-                                <td class="flex md:table-cell justify-between items-center py-3 border-b border-[var(--border)] md:border-0">
-                                    <span class="md:hidden font-bold text-xs text-[var(--text3)] uppercase">{{ __('main.daily_average') }}</span>
-                                    <span class="daily-avg text-[14px] md:text-[12px]">$ {{ number_format($month->total / 30, 2) }}/{{ __('main.day') }}</span>
+                                <td>
+                                    <span class="daily-avg">$ {{ number_format($month->total / 30, 2) }}/{{ __('main.day') }}</span>
                                 </td>
-                                <td class="flex md:table-cell justify-between items-center py-3 pt-4 md:py-3 md:pt-3 md:border-0">
-                                    <span class="md:hidden font-bold text-xs text-[var(--text3)] uppercase">{{ __('main.status') }}</span>
-                                    <span class="trend-pill text-[12px] md:text-[11px] px-3 py-1">
+                                <td>
+                                    <span class="trend-pill">
                                         <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
                                             <path d="M1 9l3.5-4L7 7l4-5" stroke="currentColor" stroke-width="1.5"
                                                 stroke-linecap="round" stroke-linejoin="round" />
@@ -792,8 +783,8 @@
                                 </td>
                             </tr>
                         @empty
-                            <tr class="block md:table-row bg-[var(--surface)] border border-[var(--border)] rounded-xl p-4 md:p-0 md:border-b">
-                                <td colspan="5" class="block md:table-cell">
+                            <tr>
+                                <td colspan="5">
                                     <div class="rpt-empty">{{ __('main.no_monthly_data') }}</div>
                                 </td>
                             </tr>

@@ -466,13 +466,13 @@
     <div class="txn-page">
 
         {{-- ── PAGE HEADER ── --}}
-        <div class="page-header flex flex-col md:flex-row items-start md:items-end">
-            <div class="page-heading w-full md:w-auto mb-2 md:mb-0">
+        <div class="page-header">
+            <div class="page-heading">
                 <p class="page-eyebrow">{{ __('main.finance') }}</p>
                 <h1 class="page-title">{{ __('main.transaction_history') }}</h1>
                 <p class="page-sub">{{ __('main.transaction_history_sub') }}</p>
             </div>
-            <a href="{{ route('pos.index') }}" class="new-txn-btn w-full md:w-auto h-[44px] md:h-auto flex justify-center text-[14px] md:text-[13px]">
+            <a href="{{ route('pos.index') }}" class="new-txn-btn">
                 <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
                     <path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                 </svg>
@@ -481,7 +481,7 @@
         </div>
 
         {{-- ── STAT CARDS ── --}}
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+        <div class="stat-row">
             <div class="stat-card">
                 <div class="stat-label">{{ __('main.total_orders') }}</div>
                 <div class="stat-value">{{ $orders->total() }}</div>
@@ -508,26 +508,26 @@
         <div class="table-card">
 
             {{-- Toolbar --}}
-            <div class="table-toolbar flex flex-col md:flex-row items-start md:items-center">
-                <div class="toolbar-left w-full md:w-auto flex justify-between md:justify-start mb-2 md:mb-0">
+            <div class="table-toolbar">
+                <div class="toolbar-left">
                     <span class="record-count">{{ __('main.records') }}</span>
                     <span class="record-badge">{{ $orders->total() }}</span>
                 </div>
-                <form action="{{ route('orders.index') }}" method="GET" class="search-form w-full md:w-auto">
+                <form action="{{ route('orders.index') }}" method="GET" class="search-form">
                     <span class="search-icon">
                         <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
                             <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.6" />
                             <path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
                         </svg>
                     </span>
-                    <input type="text" name="search" placeholder="{{ __('main.search_id_customer') }}" value="{{ request('search') }}" class="w-full md:w-[220px] h-[44px] md:h-[34px] text-[14px] md:text-[13px]">
+                    <input type="text" name="search" placeholder="{{ __('main.search_id_customer') }}" value="{{ request('search') }}">
                 </form>
             </div>
 
             {{-- Table --}}
-            <div class="overflow-x-hidden md:overflow-x-auto">
-                <table class="txn-table block md:table w-full">
-                    <thead class="hidden md:table-header-group">
+            <div style="overflow-x: auto;">
+                <table class="txn-table">
+                    <thead>
                         <tr>
                             <th>{{ __('main.trx_id') }}</th>
                             <th>{{ __('main.customer') }}</th>
@@ -538,7 +538,7 @@
                             <th>{{ __('main.action') }}</th>
                         </tr>
                     </thead>
-                    <tbody class="block md:table-row-group">
+                    <tbody>
                         @forelse($orders as $order)
                             @php
                                 $customerName = $order->customer ? $order->customer->name : __('main.walk_in');
@@ -546,51 +546,44 @@
                                     ->take(2)->map(fn($w) => strtoupper($w[0] ?? ''))->implode('');
                                 $dt = $order->created_at->timezone('Asia/Phnom_Penh');
                             @endphp
-                            <tr class="block md:table-row bg-[var(--surface)] border border-[var(--border)] rounded-xl mb-4 p-4 md:p-0 md:mb-0 md:border-b">
+                            <tr>
                                 {{-- ID --}}
-                                <td class="flex md:table-cell justify-between items-center py-2 md:py-3 border-b border-[var(--border)] md:border-0">
-                                    <span class="md:hidden font-bold text-xs text-[var(--text3)] uppercase">{{ __('main.trx_id') }}</span>
-                                    <span class="txn-id text-[14px] md:text-[12px]">#{{ str_pad($order->id, 6, '0', STR_PAD_LEFT) }}</span>
+                                <td>
+                                    <span class="txn-id">#{{ str_pad($order->id, 6, '0', STR_PAD_LEFT) }}</span>
                                 </td>
 
                                 {{-- Customer --}}
-                                <td class="block md:table-cell py-3 border-b border-[var(--border)] md:border-0">
-                                    <div class="customer-cell justify-end md:justify-start">
+                                <td>
+                                    <div class="customer-cell">
                                         <div class="customer-avatar">{{ $initials }}</div>
-                                        <span class="customer-name text-[15px] md:text-[13px]">{{ $customerName }}</span>
+                                        <span class="customer-name">{{ $customerName }}</span>
                                     </div>
                                 </td>
 
                                 {{-- Total --}}
-                                <td class="flex md:table-cell justify-between items-center py-3 border-b border-[var(--border)] md:border-0">
-                                    <span class="md:hidden font-bold text-xs text-[var(--text3)] uppercase">{{ __('main.total') }}</span>
-                                    <span class="amount-total text-[15px] md:text-[13px]">$ {{ number_format($order->total_amount, 2) }}</span>
+                                <td>
+                                    <span class="amount-total">$ {{ number_format($order->total_amount, 2) }}</span>
                                 </td>
 
                                 {{-- Cash received --}}
-                                <td class="flex md:table-cell justify-between items-center py-3 border-b border-[var(--border)] md:border-0">
-                                    <span class="md:hidden font-bold text-xs text-[var(--text3)] uppercase">{{ __('main.cash_received') }}</span>
-                                    <span class="amount-cash text-[14px] md:text-[12px] px-3 py-1">$ {{ number_format($order->cash_received, 2) }}</span>
+                                <td>
+                                    <span class="amount-cash">$ {{ number_format($order->cash_received, 2) }}</span>
                                 </td>
 
                                 {{-- Change --}}
-                                <td class="flex md:table-cell justify-between items-center py-3 border-b border-[var(--border)] md:border-0">
-                                    <span class="md:hidden font-bold text-xs text-[var(--text3)] uppercase">{{ __('main.change') }}</span>
-                                    <span class="amount-change text-[14px] md:text-[12px] px-3 py-1">$ {{ number_format($order->change_amount, 2) }}</span>
+                                <td>
+                                    <span class="amount-change">$ {{ number_format($order->change_amount, 2) }}</span>
                                 </td>
 
                                 {{-- Date --}}
-                                <td class="flex md:table-cell justify-between items-center py-3 border-b border-[var(--border)] md:border-0 date-cell text-right md:text-left">
-                                    <span class="md:hidden font-bold text-xs text-[var(--text3)] uppercase">{{ __('main.date_time') }}</span>
-                                    <div>
-                                        <div class="date-main text-[14px] md:text-[12px]">{{ $dt->format('M d, Y') }}</div>
-                                        <div class="date-time text-[12px] md:text-[11px]">{{ $dt->format('H:i') }}</div>
-                                    </div>
+                                <td class="date-cell">
+                                    <div class="date-main">{{ $dt->format('M d, Y') }}</div>
+                                    <div class="date-time">{{ $dt->format('H:i') }}</div>
                                 </td>
 
                                 {{-- Action --}}
-                                <td class="block md:table-cell py-3 pt-4 md:py-3 md:pt-3">
-                                    <a href="{{ route('orders.show', $order->id) }}" class="details-btn w-full md:w-auto h-[44px] md:h-auto flex justify-center text-[14px] md:text-[12px]">
+                                <td>
+                                    <a href="{{ route('orders.show', $order->id) }}" class="details-btn">
                                         <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
                                             <circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.5" />
                                             <path
