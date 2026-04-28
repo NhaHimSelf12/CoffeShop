@@ -367,6 +367,7 @@
             #sidebar {
                 transform: translateX(-100%);
                 transition: transform var(--transition);
+                z-index: 200;
             }
 
             #sidebar.open {
@@ -375,6 +376,89 @@
 
             #content {
                 margin-left: 0;
+            }
+
+            .topbar {
+                padding: 0 16px;
+                height: 60px;
+            }
+
+            .topbar-left .page-title {
+                font-size: 1rem;
+            }
+
+            .topbar-left .breadcrumb-text {
+                display: none;
+            }
+
+            .page-body {
+                padding: 16px;
+            }
+        }
+
+        /* ─── SIDEBAR OVERLAY ─────────────────────── */
+        #sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 150;
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+        }
+
+        #sidebar-overlay.active {
+            display: block;
+        }
+
+        /* ─── SIDEBAR CLOSE BUTTON ────────────────── */
+        .sidebar-close-btn {
+            display: none;
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, .1);
+            border: 1px solid rgba(255, 255, 255, .15);
+            color: rgba(255, 255, 255, .7);
+            font-size: .85rem;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition);
+            z-index: 10;
+        }
+
+        .sidebar-close-btn:hover {
+            background: rgba(231, 76, 60, .2);
+            border-color: rgba(231, 76, 60, .35);
+            color: #e74c3c;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar-close-btn {
+                display: flex;
+            }
+
+            body.sidebar-open {
+                overflow: hidden;
+            }
+        }
+
+        /* ─── HAMBURGER BUTTON ────────────────────── */
+        #sidebarToggle {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            #sidebarToggle {
+                display: flex;
+                min-width: 44px;
+                min-height: 44px;
+                width: 44px;
+                height: 44px;
             }
         }
 
@@ -501,10 +585,18 @@
         @yield('content')
     @else
 
+        {{-- ══════════ SIDEBAR OVERLAY ══════════ --}}
+        <div id="sidebar-overlay"></div>
+
         <div id="wrapper">
 
             {{-- ══════════ SIDEBAR ══════════ --}}
             <nav id="sidebar">
+
+                {{-- Mobile close button --}}
+                <button class="sidebar-close-btn" id="sidebarClose" aria-label="Close menu">
+                    <i class="fas fa-times"></i>
+                </button>
 
                 {{-- Brand --}}
                 <div class="sidebar-brand">
@@ -726,9 +818,21 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         // Mobile sidebar toggle
-        document.getElementById('sidebarToggle')?.addEventListener('click', () => {
-            document.getElementById('sidebar').classList.toggle('open');
-        });
+        function openSidebar() {
+            document.getElementById('sidebar').classList.add('open');
+            document.getElementById('sidebar-overlay').classList.add('active');
+            document.body.classList.add('sidebar-open');
+        }
+
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('sidebar-overlay').classList.remove('active');
+            document.body.classList.remove('sidebar-open');
+        }
+
+        document.getElementById('sidebarToggle')?.addEventListener('click', openSidebar);
+        document.getElementById('sidebarClose')?.addEventListener('click', closeSidebar);
+        document.getElementById('sidebar-overlay')?.addEventListener('click', closeSidebar);
 
         // Language dropdown toggle
         function toggleLanguageDropdown() {

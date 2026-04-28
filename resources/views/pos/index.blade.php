@@ -39,14 +39,16 @@
             background: var(--bg);
             color: var(--text1);
             font-size: 14px;
+            overflow-x: hidden;
         }
 
+        /* ── POS WRAPPER ── */
         .pos-wrap {
             display: grid;
             grid-template-columns: 1fr 340px;
             grid-template-rows: auto 1fr;
-            min-height: calc(100vh - 56px);
-            /* adjust to your navbar height */
+            min-height: calc(100vh - 68px);
+            max-width: 100%;
         }
 
         /* ── HEADER ── */
@@ -57,13 +59,16 @@
             padding: 0 24px;
             display: flex;
             align-items: center;
-            gap: 20px;
-            height: 58px;
+            gap: 16px;
+            height: 56px;
+            position: sticky;
+            top: 68px;
+            z-index: 40;
         }
 
         .pos-logo {
             font-family: var(--font-display);
-            font-size: 18px;
+            font-size: 17px;
             color: var(--text1);
             letter-spacing: -0.3px;
             display: flex;
@@ -113,12 +118,12 @@
 
         .search-wrap input {
             width: 100%;
-            height: 36px;
+            height: 40px;
             border: 1px solid var(--border2);
             border-radius: 100px;
             padding: 0 16px 0 36px;
             font-family: var(--font-body);
-            font-size: 13px;
+            font-size: 14px;
             background: var(--bg);
             color: var(--text1);
             outline: none;
@@ -130,6 +135,45 @@
             background: var(--surface);
         }
 
+        /* Mobile cart toggle button in header */
+        .cart-toggle-btn {
+            display: none;
+            position: relative;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: var(--r-sm);
+            border: 1px solid var(--border2);
+            background: var(--surface);
+            color: var(--text2);
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: border-color 0.15s, color 0.15s;
+        }
+
+        .cart-toggle-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .cart-toggle-badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: var(--accent);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+
         /* ── LEFT PANEL ── */
         .pos-left {
             background: var(--bg);
@@ -138,20 +182,29 @@
             display: flex;
             flex-direction: column;
             gap: 16px;
+            min-width: 0;
         }
 
         /* Category pills */
         .cat-strip {
             display: flex;
             gap: 8px;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .cat-strip::-webkit-scrollbar {
+            display: none;
         }
 
         .cat-pill {
-            padding: 6px 14px;
+            padding: 8px 16px;
             border-radius: 100px;
             border: 1px solid var(--border2);
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 500;
             cursor: pointer;
             background: var(--surface);
@@ -159,6 +212,9 @@
             transition: all 0.15s;
             letter-spacing: 0.2px;
             font-family: var(--font-body);
+            white-space: nowrap;
+            flex-shrink: 0;
+            min-height: 36px;
         }
 
         .cat-pill:hover {
@@ -172,11 +228,29 @@
             color: #fff;
         }
 
-        /* Product grid */
+        /* Product grid — responsive columns */
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 12px;
+        }
+
+        @media (min-width: 540px) {
+            .product-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 900px) {
+            .product-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .product-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
         }
 
         .product-card {
@@ -187,6 +261,7 @@
             cursor: pointer;
             transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
             position: relative;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .product-card:hover {
@@ -196,7 +271,7 @@
         }
 
         .product-card:active {
-            transform: scale(0.98);
+            transform: scale(0.97);
         }
 
         .product-card.out-of-stock {
@@ -222,21 +297,23 @@
         }
 
         .product-img-placeholder {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text3);
             letter-spacing: 0.3px;
+            text-align: center;
+            padding: 4px;
         }
 
         .product-badge {
             position: absolute;
-            top: 8px;
-            right: 8px;
+            top: 6px;
+            right: 6px;
             background: rgba(255, 255, 255, 0.92);
             border: 1px solid var(--border);
             border-radius: 100px;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 500;
-            padding: 2px 8px;
+            padding: 2px 6px;
             color: var(--text2);
         }
 
@@ -269,7 +346,7 @@
         }
 
         .product-price {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             color: var(--accent);
         }
@@ -278,15 +355,15 @@
             position: absolute;
             bottom: 8px;
             right: 8px;
-            width: 22px;
-            height: 22px;
+            width: 26px;
+            height: 26px;
             border-radius: 50%;
             background: var(--accent);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 16px;
+            font-size: 18px;
             line-height: 1;
             opacity: 0;
             transition: opacity 0.15s;
@@ -296,21 +373,27 @@
             opacity: 1;
         }
 
+        /* Always show add button on touch devices */
+        @media (hover: none) {
+            .add-ripple {
+                opacity: 0.85;
+            }
+        }
+
         /* ── RIGHT CART PANEL ── */
         .pos-right {
             background: var(--surface);
             border-left: 1px solid var(--border);
             display: flex;
             flex-direction: column;
-            height: calc(100vh - 114px);
-            /* pos-header + your nav */
+            height: calc(100vh - 124px);
+            /* topbar + pos-header */
             position: sticky;
-            top: 56px;
-            /* your navbar height */
+            top: 124px;
         }
 
         .cart-header {
-            padding: 18px 20px 14px;
+            padding: 16px 20px 14px;
             border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
@@ -324,6 +407,12 @@
             color: var(--text1);
         }
 
+        .cart-header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
         .cart-count {
             background: var(--accent);
             color: white;
@@ -335,10 +424,33 @@
             text-align: center;
         }
 
+        /* Close button for mobile drawer */
+        .cart-close-btn {
+            display: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid var(--border2);
+            background: var(--bg);
+            color: var(--text2);
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: background 0.15s, color 0.15s;
+            flex-shrink: 0;
+        }
+
+        .cart-close-btn:hover {
+            background: #FCEBEB;
+            color: #E24B4A;
+        }
+
         .cart-items {
             flex: 1;
             overflow-y: auto;
             padding: 0 20px;
+            -webkit-overflow-scrolling: touch;
         }
 
         .cart-empty {
@@ -366,7 +478,7 @@
         .cart-item {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             padding: 12px 0;
             border-bottom: 1px solid var(--border);
             animation: slideIn 0.18s ease;
@@ -385,8 +497,8 @@
         }
 
         .cart-item-thumb {
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             background: var(--bg);
             border-radius: var(--r-sm);
             display: flex;
@@ -426,16 +538,16 @@
         .qty-ctrl {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
             background: var(--bg);
             border-radius: 100px;
-            padding: 3px 6px;
+            padding: 2px 4px;
             flex-shrink: 0;
         }
 
         .qty-btn {
-            width: 20px;
-            height: 20px;
+            width: 28px;
+            height: 28px;
             border: none;
             background: none;
             cursor: pointer;
@@ -443,11 +555,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 15px;
+            font-size: 16px;
             color: var(--text2);
             line-height: 1;
             transition: background 0.1s;
             font-family: var(--font-body);
+            /* Touch-friendly minimum size */
+            min-width: 28px;
+            min-height: 28px;
         }
 
         .qty-btn:hover {
@@ -455,9 +570,9 @@
         }
 
         .qty-num {
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 600;
-            min-width: 16px;
+            min-width: 18px;
             text-align: center;
             color: var(--text1);
         }
@@ -466,14 +581,14 @@
             font-size: 13px;
             font-weight: 600;
             color: var(--text1);
-            min-width: 52px;
+            min-width: 48px;
             text-align: right;
             flex-shrink: 0;
         }
 
         /* Cart footer */
         .cart-footer {
-            padding: 16px 20px 20px;
+            padding: 14px 20px 20px;
             border-top: 1px solid var(--border);
             flex-shrink: 0;
         }
@@ -488,17 +603,17 @@
         }
 
         .customer-row {
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .styled-select {
             width: 100%;
-            height: 34px;
+            height: 40px;
             border: 1px solid var(--border2);
             border-radius: var(--r-sm);
             padding: 0 10px;
             font-family: var(--font-body);
-            font-size: 13px;
+            font-size: 14px;
             color: var(--text1);
             background: var(--bg);
             outline: none;
@@ -560,12 +675,12 @@
 
         .cash-input-wrap input {
             width: 100%;
-            height: 38px;
+            height: 44px;
             border: 1px solid var(--border2);
             border-radius: var(--r-sm);
             padding: 0 12px 0 28px;
             font-family: var(--font-body);
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 500;
             color: var(--text1);
             background: var(--bg);
@@ -604,13 +719,13 @@
 
         .checkout-btn {
             width: 100%;
-            height: 46px;
+            height: 50px;
             background: var(--accent);
             color: white;
             border: none;
             border-radius: var(--r);
             font-family: var(--font-body);
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             transition: opacity 0.15s, transform 0.1s;
@@ -619,6 +734,7 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
+            min-height: 50px;
         }
 
         .checkout-btn:hover:not(:disabled) {
@@ -637,26 +753,220 @@
 
         .clear-btn {
             width: 100%;
-            height: 34px;
+            height: 40px;
             background: none;
             color: var(--text3);
             border: none;
             font-family: var(--font-body);
-            font-size: 12px;
+            font-size: 13px;
             cursor: pointer;
             margin-top: 8px;
             border-radius: var(--r-sm);
             transition: color 0.15s, background 0.15s;
+            min-height: 40px;
         }
 
         .clear-btn:hover {
             color: #E24B4A;
             background: #FCEBEB;
         }
+
+        /* ── MOBILE CART DRAWER OVERLAY ── */
+        #cart-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 300;
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+        }
+
+        #cart-overlay.active {
+            display: block;
+        }
+
+        /* ── RESPONSIVE BREAKPOINTS ── */
+
+        /* Tablet: 768px – 1023px */
+        @media (max-width: 1023px) {
+            .pos-wrap {
+                grid-template-columns: 1fr 300px;
+            }
+
+            .pos-right {
+                height: calc(100vh - 128px);
+                top: 128px;
+            }
+        }
+
+        /* Mobile: < 768px */
+        @media (max-width: 767px) {
+            /* Full-width single column layout */
+            .pos-wrap {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr;
+                min-height: calc(100vh - 60px);
+            }
+
+            /* Header adjustments */
+            .pos-header {
+                padding: 0 14px;
+                height: 52px;
+                top: 60px;
+                gap: 10px;
+            }
+
+            .pos-logo {
+                font-size: 14px;
+            }
+
+            .pos-header-divider,
+            .pos-date {
+                display: none;
+            }
+
+            .search-wrap {
+                margin-left: 0;
+                max-width: none;
+            }
+
+            .search-wrap input {
+                height: 38px;
+                font-size: 14px;
+            }
+
+            /* Show cart toggle button */
+            .cart-toggle-btn {
+                display: flex;
+            }
+
+            /* Left panel full width */
+            .pos-left {
+                padding: 14px 14px 100px;
+                /* bottom padding for FAB clearance */
+                grid-column: 1;
+            }
+
+            /* Product grid: 2 columns on mobile */
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            /* Cart panel becomes a bottom drawer on mobile */
+            .pos-right {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                top: auto;
+                height: 85vh;
+                max-height: 85vh;
+                border-left: none;
+                border-top: 1px solid var(--border);
+                border-radius: 20px 20px 0 0;
+                z-index: 350;
+                transform: translateY(100%);
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.15);
+            }
+
+            .pos-right.drawer-open {
+                transform: translateY(0);
+            }
+
+            /* Show close button in mobile drawer */
+            .cart-close-btn {
+                display: flex;
+            }
+
+            /* Drawer handle indicator */
+            .cart-header::before {
+                content: '';
+                position: absolute;
+                top: 8px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 36px;
+                height: 4px;
+                background: var(--border2);
+                border-radius: 2px;
+            }
+
+            .cart-header {
+                position: relative;
+                padding-top: 22px;
+            }
+
+            /* Larger touch targets for qty buttons on mobile */
+            .qty-btn {
+                width: 36px;
+                height: 36px;
+                min-width: 36px;
+                min-height: 36px;
+                font-size: 18px;
+            }
+
+            .qty-ctrl {
+                padding: 2px 6px;
+                gap: 2px;
+            }
+
+            /* Larger checkout button */
+            .checkout-btn {
+                height: 54px;
+                font-size: 16px;
+            }
+
+            /* Larger select */
+            .styled-select {
+                height: 44px;
+                font-size: 15px;
+            }
+
+            /* Cat pills scrollable row */
+            .cat-strip {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+            }
+
+            .cat-pill {
+                min-height: 38px;
+                padding: 8px 16px;
+            }
+        }
+
+        /* Very small screens: < 375px */
+        @media (max-width: 374px) {
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+
+            .pos-left {
+                padding: 12px 10px 100px;
+            }
+
+            .product-info {
+                padding: 8px 10px 10px;
+            }
+
+            .product-name {
+                font-size: 11px;
+            }
+
+            .product-price {
+                font-size: 12px;
+            }
+        }
     </style>
 @endsection
 
 @section('content')
+    {{-- Mobile cart overlay --}}
+    <div id="cart-overlay"></div>
+
     <div class="pos-wrap">
 
         {{-- ── HEADER ── --}}
@@ -676,6 +986,15 @@
                 </span>
                 <input type="text" id="search-product" placeholder="{{ __('main.search_products') }}">
             </div>
+            {{-- Mobile cart toggle button --}}
+            <button class="cart-toggle-btn" id="cart-toggle-btn" aria-label="View order">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    <line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    <path d="M16 10a4 4 0 01-8 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="cart-toggle-badge" id="cart-toggle-badge">0</span>
+            </button>
         </div>
 
         {{-- ── LEFT: PRODUCTS ── --}}
@@ -698,7 +1017,7 @@
 
                         <div class="product-img">
                             @if($product->image)
-                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
+                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" loading="lazy">
                             @else
                                 <span class="product-img-placeholder">{{ __('main.no_image') }}</span>
                             @endif
@@ -723,11 +1042,16 @@
         </div>
 
         {{-- ── RIGHT: CART ── --}}
-        <div class="pos-right">
+        <div class="pos-right" id="pos-right">
 
             <div class="cart-header">
                 <span class="cart-title">{{ __('main.current_order') }}</span>
-                <span class="cart-count" id="cart-count">0</span>
+                <div class="cart-header-right">
+                    <span class="cart-count" id="cart-count">0</span>
+                    <button class="cart-close-btn" id="cart-close-btn" aria-label="Close order panel">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
             </div>
 
             <div class="cart-items" id="cart-list">
@@ -768,7 +1092,7 @@
                     <div class="field-label">{{ __('main.cash_received') }}</div>
                     <div class="cash-input-wrap">
                         <span class="cash-symbol">$</span>
-                        <input type="number" step="0.01" id="cash-received" placeholder="0.00">
+                        <input type="number" step="0.01" id="cash-received" placeholder="0.00" inputmode="decimal">
                     </div>
                 </div>
 
@@ -806,7 +1130,6 @@
                 day: 'numeric',
                 year: 'numeric'
             };
-            // Use locale-appropriate date format
             const localeMap = {
                 'en': 'en-US',
                 'km': 'km-KH',
@@ -814,7 +1137,8 @@
                 'zh-CN': 'zh-CN'
             };
             const locale = localeMap[currentLocale] || 'en-US';
-            document.getElementById('pos-date').textContent = new Date().toLocaleDateString(locale, dateOptions);
+            const dateEl = document.getElementById('pos-date');
+            if (dateEl) dateEl.textContent = new Date().toLocaleDateString(locale, dateOptions);
         }
         updatePOSDate();
 
@@ -824,6 +1148,40 @@
             noImage: '{{ __('main.no_image') }}',
             each: '{{ __('main.each') }}'
         };
+
+        /* ── Mobile cart drawer ── */
+        const cartPanel   = document.getElementById('pos-right');
+        const cartOverlay = document.getElementById('cart-overlay');
+        const cartToggle  = document.getElementById('cart-toggle-btn');
+        const cartClose   = document.getElementById('cart-close-btn');
+
+        function isMobile() {
+            return window.innerWidth < 768;
+        }
+
+        function openCartDrawer() {
+            if (!isMobile()) return;
+            cartPanel.classList.add('drawer-open');
+            cartOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCartDrawer() {
+            cartPanel.classList.remove('drawer-open');
+            cartOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        cartToggle?.addEventListener('click', openCartDrawer);
+        cartClose?.addEventListener('click', closeCartDrawer);
+        cartOverlay?.addEventListener('click', closeCartDrawer);
+
+        // Close drawer on resize to desktop
+        window.addEventListener('resize', () => {
+            if (!isMobile()) {
+                closeCartDrawer();
+            }
+        });
 
         /* ── Add to cart ── */
         function addToCart(id, name, price, stock, image) {
@@ -836,6 +1194,14 @@
                 cart.push({ id, name, price, quantity: 1, maxStock: stock, image });
             }
             renderCart();
+            // On mobile, briefly flash the cart badge to indicate item added
+            if (isMobile()) {
+                const badge = document.getElementById('cart-toggle-badge');
+                if (badge) {
+                    badge.style.transform = 'scale(1.4)';
+                    setTimeout(() => { badge.style.transform = ''; }, 200);
+                }
+            }
         }
 
         /* ── Qty change ── */
@@ -849,12 +1215,14 @@
 
         /* ── Render cart ── */
         function renderCart() {
-            const list = document.getElementById('cart-list');
-            const empty = document.getElementById('empty-cart-msg');
-            const countEl = document.getElementById('cart-count');
+            const list     = document.getElementById('cart-list');
+            const empty    = document.getElementById('empty-cart-msg');
+            const countEl  = document.getElementById('cart-count');
+            const badgeEl  = document.getElementById('cart-toggle-badge');
 
             const totalItems = cart.reduce((s, i) => s + i.quantity, 0);
             countEl.textContent = totalItems;
+            if (badgeEl) badgeEl.textContent = totalItems;
 
             /* remove old rows */
             list.querySelectorAll('.cart-item').forEach(el => el.remove());
@@ -863,8 +1231,8 @@
                 empty.style.display = 'flex';
                 document.getElementById('checkout-btn').disabled = true;
                 document.getElementById('val-subtotal').textContent = '$ 0.00';
-                document.getElementById('val-tax').textContent = '$ 0.00';
-                document.getElementById('val-total').textContent = '$ 0.00';
+                document.getElementById('val-tax').textContent      = '$ 0.00';
+                document.getElementById('val-total').textContent    = '$ 0.00';
                 updateChange();
                 return;
             }
@@ -885,37 +1253,37 @@
                 const div = document.createElement('div');
                 div.className = 'cart-item';
                 div.innerHTML = `
-                                    <div class="cart-item-thumb">${thumb}</div>
-                                    <div class="cart-item-info">
-                                        <div class="cart-item-name">${item.name}</div>
-                                        <div class="cart-item-unit">$${item.price.toFixed(2)} ${posTranslations.each}</div>
-                                    </div>
-                                    <div class="qty-ctrl">
-                                        <button class="qty-btn" onclick="changeQty(${item.id}, -1)">−</button>
-                                        <span class="qty-num">${item.quantity}</span>
-                                        <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
-                                    </div>
-                                    <div class="cart-item-total">$${itemTotal.toFixed(2)}</div>
-                                `;
+                    <div class="cart-item-thumb">${thumb}</div>
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-unit">${item.price.toFixed(2)} ${posTranslations.each}</div>
+                    </div>
+                    <div class="qty-ctrl">
+                        <button class="qty-btn" onclick="changeQty(${item.id}, -1)" aria-label="Decrease">−</button>
+                        <span class="qty-num">${item.quantity}</span>
+                        <button class="qty-btn" onclick="changeQty(${item.id}, 1)" aria-label="Increase">+</button>
+                    </div>
+                    <div class="cart-item-total">${itemTotal.toFixed(2)}</div>
+                `;
                 list.insertBefore(div, empty);
             });
 
-            const tax = subtotal * TAX_RATE;
+            const tax   = subtotal * TAX_RATE;
             const total = subtotal + tax;
 
             document.getElementById('val-subtotal').textContent = '$ ' + subtotal.toFixed(2);
-            document.getElementById('val-tax').textContent = '$ ' + tax.toFixed(2);
-            document.getElementById('val-total').textContent = '$ ' + total.toFixed(2);
+            document.getElementById('val-tax').textContent      = '$ ' + tax.toFixed(2);
+            document.getElementById('val-total').textContent    = '$ ' + total.toFixed(2);
 
             updateChange();
         }
 
         /* ── Change calculation ── */
         function updateChange() {
-            const total = parseFloat(document.getElementById('val-total').textContent.replace('$ ', '')) || 0;
+            const total    = parseFloat(document.getElementById('val-total').textContent.replace('$ ', '')) || 0;
             const received = parseFloat(document.getElementById('cash-received').value) || 0;
-            const change = received - total;
-            const el = document.getElementById('val-change');
+            const change   = received - total;
+            const el       = document.getElementById('val-change');
             el.textContent = '$ ' + Math.max(0, change).toFixed(2);
             el.classList.toggle('insufficient', received > 0 && change < 0);
         }
@@ -928,6 +1296,7 @@
             cart = [];
             document.getElementById('cash-received').value = '';
             renderCart();
+            closeCartDrawer();
         }
 
         /* ── Category filter ── */
@@ -952,7 +1321,7 @@
 
         /* ── Checkout ── */
         document.getElementById('checkout-btn').addEventListener('click', function () {
-            const total = parseFloat(document.getElementById('val-total').textContent.replace('$ ', '')) || 0;
+            const total    = parseFloat(document.getElementById('val-total').textContent.replace('$ ', '')) || 0;
             const received = parseFloat(document.getElementById('cash-received').value) || 0;
 
             if (received < total) {
@@ -977,22 +1346,22 @@
                     cash_received: received
                 })
             })
-                .then(res => {
-                    if (!res.ok) throw new Error('Server error');
-                    return res.json();
-                })
-                .then(() => {
-                    window.location.href = "{{ route('orders.index') }}";
-                })
-                .catch(() => {
-                    alert('Something went wrong. Please try again.');
-                    btn.disabled = false;
-                    btn.innerHTML = `
-                                    <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
-                                        <path d="M2 8h12M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                    Process Checkout`;
-                });
+            .then(res => {
+                if (!res.ok) throw new Error('Server error');
+                return res.json();
+            })
+            .then(() => {
+                window.location.href = "{{ route('orders.index') }}";
+            })
+            .catch(() => {
+                alert('Something went wrong. Please try again.');
+                btn.disabled = false;
+                btn.innerHTML = `
+                    <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+                        <path d="M2 8h12M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    {{ __('main.process_checkout') }}`;
+            });
         });
     </script>
 @endsection
