@@ -570,15 +570,21 @@
     <div class="cust-page">
 
         {{-- ── PAGE HEADER ── --}}
-        <div class="page-header">
-            <div>
+        <div class="page-header flex flex-col md:flex-row items-start md:items-end">
+            <div class="w-full md:w-auto mb-2 md:mb-0">
                 <p class="page-eyebrow">CRM</p>
                 <h1 class="page-title">{{ __('main.customer_management') }}</h1>
                 <p class="page-sub">{{ __('main.manage_customer_database') }}</p>
             </div>
 
-            <div class="header-right">
-                <form action="{{ route('customers.index') }}" method="GET" class="search-form">
+            <div class="header-right flex flex-col md:flex-row w-full md:w-auto gap-3">
+                <button class="add-btn w-full md:w-auto h-[44px] md:h-auto flex justify-center text-[14px] md:text-[13px] order-1 md:order-2" onclick="prepareModal('add')">
+                    <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+                        <path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                    {{ __('main.add_new') }}
+                </button>
+                <form action="{{ route('customers.index') }}" method="GET" class="search-form w-full md:w-auto order-2 md:order-1">
                     <span class="search-icon">
                         <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
                             <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.6" />
@@ -586,29 +592,22 @@
                         </svg>
                     </span>
                     <input type="text" name="search" placeholder="{{ __('main.search_by_name_phone') }}"
-                        value="{{ request('search') }}">
-                    <button type="submit" class="search-submit">
+                        value="{{ request('search') }}" class="w-full md:w-[220px] h-[44px] md:h-[36px] text-[14px] md:text-[13px]">
+                    <button type="submit" class="search-submit h-[44px] md:h-auto w-[44px] md:w-auto justify-center">
                         <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
                             <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
                                 stroke-linejoin="round" />
                         </svg>
                     </button>
                 </form>
-
-                <button class="add-btn" onclick="prepareModal('add')">
-                    <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
-                        <path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                    </svg>
-                    {{ __('main.add_new') }}
-                </button>
             </div>
         </div>
 
         {{-- ── TABLE CARD ── --}}
-        <div class="table-card">
-            <div style="overflow-x: auto;">
-                <table class="cust-table">
-                    <thead>
+        <div class="table-card bg-transparent md:bg-[var(--surface)] border-0 md:border md:border-[var(--border)]">
+            <div class="overflow-x-hidden md:overflow-x-auto">
+                <table class="cust-table block md:table w-full">
+                    <thead class="hidden md:table-header-group">
                         <tr>
                             <th>{{ __('main.id') }}</th>
                             <th>{{ __('main.identity_contact') }}</th>
@@ -617,7 +616,7 @@
                             <th>{{ __('main.actions') }}</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="block md:table-row-group">
                         @forelse($customers as $customer)
                             @php
                                 $initial = strtoupper(substr($customer->name, 0, 1));
@@ -627,17 +626,20 @@
                                     default => 'other',
                                 };
                             @endphp
-                            <tr>
+                            <tr class="block md:table-row bg-[var(--surface)] border border-[var(--border)] rounded-xl mb-4 p-4 md:p-0 md:mb-0 md:border-b">
                                 {{-- ID --}}
-                                <td><span class="id-cell">#{{ str_pad($customer->id, 5, '0', STR_PAD_LEFT) }}</span></td>
+                                <td class="flex md:table-cell justify-between items-center py-2 md:py-3 border-b border-[var(--border)] md:border-0">
+                                    <span class="md:hidden font-bold text-xs text-[var(--text3)] uppercase">{{ __('main.id') }}</span>
+                                    <span class="id-cell text-[14px] md:text-[11px]">#{{ str_pad($customer->id, 5, '0', STR_PAD_LEFT) }}</span>
+                                </td>
 
                                 {{-- Identity --}}
-                                <td>
+                                <td class="block md:table-cell py-3 border-b border-[var(--border)] md:border-0">
                                     <div class="identity-cell">
                                         <div class="cust-avatar">{{ $initial }}</div>
                                         <div>
-                                            <div class="cust-name">{{ $customer->name }}</div>
-                                            <div class="cust-phone">
+                                            <div class="cust-name text-[15px] md:text-[13px]">{{ $customer->name }}</div>
+                                            <div class="cust-phone text-[14px] md:text-[11px]">
                                                 <svg width="10" height="10" viewBox="0 0 16 16" fill="none">
                                                     <path
                                                         d="M3 3a1 1 0 011-1h2l1.5 3.5-1.5 1a9 9 0 004.5 4.5l1-1.5L15 11v2a1 1 0 01-1 1A13 13 0 012 3"
@@ -650,17 +652,21 @@
                                 </td>
 
                                 {{-- Gender --}}
-                                <td>
-                                    <span class="gender-pill {{ $genderCls }}">{{ $customer->gender }}</span>
+                                <td class="flex md:table-cell justify-between items-center py-3 border-b border-[var(--border)] md:border-0">
+                                    <span class="md:hidden font-bold text-xs text-[var(--text3)] uppercase">{{ __('main.gender') }}</span>
+                                    <span class="gender-pill {{ $genderCls }} text-[12px] md:text-[11px] px-3 py-1">{{ $customer->gender }}</span>
                                 </td>
 
                                 {{-- Date --}}
-                                <td class="date-cell">{{ $customer->created_at->format('d M Y') }}</td>
+                                <td class="flex md:table-cell justify-between items-center py-3 border-b border-[var(--border)] md:border-0 date-cell text-[14px] md:text-[12px]">
+                                    <span class="md:hidden font-bold text-xs text-[var(--text3)] uppercase">{{ __('main.registration_date') }}</span>
+                                    <span>{{ $customer->created_at->format('d M Y') }}</span>
+                                </td>
 
                                 {{-- Actions --}}
-                                <td>
-                                    <div class="action-cell">
-                                        <button class="act-btn edit"
+                                <td class="flex md:table-cell justify-end md:justify-start items-center py-3 pt-4 md:py-3 md:pt-3">
+                                    <div class="action-cell flex w-full md:w-auto gap-2">
+                                        <button class="act-btn edit flex-1 md:flex-none justify-center h-[44px] md:h-auto text-[14px] md:text-[12px]"
                                             onclick="prepareModal('edit', {{ json_encode($customer) }})">
                                             <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
                                                 <path d="M11.5 2.5l2 2L5 13H3v-2L11.5 2.5z" stroke="currentColor"
@@ -670,10 +676,10 @@
                                         </button>
 
                                         <form action="{{ route('customers.destroy', $customer->id) }}" method="POST"
-                                            style="display:inline;"
+                                            class="flex-1 md:flex-none m-0"
                                             onsubmit="return confirm('{{ __('main.confirm_delete_customer') }}')">
                                             @csrf @method('DELETE')
-                                            <button type="submit" class="act-btn delete">
+                                            <button type="submit" class="act-btn delete w-full justify-center h-[44px] md:h-auto text-[14px] md:text-[12px]">
                                                 <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
                                                     <path d="M3 5h10M6 5V3h4v2M6 8v5M10 8v5" stroke="currentColor"
                                                         stroke-width="1.4" stroke-linecap="round" />
