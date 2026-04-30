@@ -597,14 +597,14 @@
                     <span class="date-lbl">{{ __('main.to') }}</span>
                     <input type="date" name="end_date" value="{{ $end_date->format('Y-m-d') }}">
                 </div>
-                <button type="submit" class="btn-apply">
+                <button type="submit" class="btn-apply max-sm:min-h-[44px]">
                     <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
                         <path d="M2 8a6 6 0 1012 0A6 6 0 002 8z" stroke="currentColor" stroke-width="1.6" />
                         <path d="M13.5 13.5l2 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
                     </svg>
                     {{ __('main.apply') }}
                 </button>
-                <button type="button" class="btn-print" onclick="window.print()">
+                <button type="button" class="btn-print max-sm:min-h-[44px]" onclick="window.print()">
                     <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
                         <rect x="3" y="1" width="10" height="6" rx="1" stroke="currentColor" stroke-width="1.4" />
                         <path d="M3 7v6a1 1 0 001 1h8a1 1 0 001-1V7" stroke="currentColor" stroke-width="1.4" />
@@ -617,7 +617,7 @@
         </div>
 
         {{-- ── STAT CARDS ── --}}
-        <div class="stat-row">
+        <div class="stat-row max-sm:grid-cols-1">
             <div class="stat-card">
                 <div class="stat-top">
                     <div>

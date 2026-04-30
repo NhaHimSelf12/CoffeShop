@@ -472,7 +472,7 @@
                 <h1 class="page-title">{{ __('main.transaction_history') }}</h1>
                 <p class="page-sub">{{ __('main.transaction_history_sub') }}</p>
             </div>
-            <a href="{{ route('pos.index') }}" class="new-txn-btn">
+            <a href="{{ route('pos.index') }}" class="new-txn-btn max-sm:min-h-[44px]">
                 <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
                     <path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                 </svg>
@@ -513,19 +513,19 @@
                     <span class="record-count">{{ __('main.records') }}</span>
                     <span class="record-badge">{{ $orders->total() }}</span>
                 </div>
-                <form action="{{ route('orders.index') }}" method="GET" class="search-form">
+                <form action="{{ route('orders.index') }}" method="GET" class="search-form max-sm:w-full">
                     <span class="search-icon">
                         <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
                             <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.6" />
                             <path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
                         </svg>
                     </span>
-                    <input type="text" name="search" placeholder="{{ __('main.search_id_customer') }}" value="{{ request('search') }}">
+                    <input type="text" name="search" class="max-sm:w-full" placeholder="{{ __('main.search_id_customer') }}" value="{{ request('search') }}">
                 </form>
             </div>
 
             {{-- Table --}}
-            <div style="overflow-x: auto;">
+            <div style="overflow-x: auto;" class="max-sm:overflow-x-auto">
                 <table class="txn-table">
                     <thead>
                         <tr>
@@ -583,7 +583,7 @@
 
                                 {{-- Action --}}
                                 <td>
-                                    <a href="{{ route('orders.show', $order->id) }}" class="details-btn">
+                                    <a href="{{ route('orders.show', $order->id) }}" class="details-btn max-sm:min-h-[44px]">
                                         <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
                                             <circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.5" />
                                             <path

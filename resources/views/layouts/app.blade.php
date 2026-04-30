@@ -591,10 +591,10 @@
         <div id="wrapper">
 
             {{-- ══════════ SIDEBAR ══════════ --}}
-            <nav id="sidebar">
+            <nav id="sidebar" class="max-sm:hidden">
 
                 {{-- Mobile close button --}}
-                <button class="sidebar-close-btn" id="sidebarClose" aria-label="Close menu">
+                <button class="sidebar-close-btn max-sm:min-h-[44px]" id="sidebarClose" aria-label="Close menu">
                     <i class="fas fa-times"></i>
                 </button>
 
@@ -703,7 +703,7 @@
                         </div>
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
-                            <button type="submit" class="logout-btn" title="Logout">
+                            <button type="submit" class="logout-btn max-sm:min-h-[44px]" title="Logout">
                                 <i class="fas fa-sign-out-alt"></i>
                             </button>
                         </form>
@@ -726,7 +726,7 @@
                         </div>
                     </div>
                     <div class="topbar-right">
-                        <button class="topbar-btn d-md-none" id="sidebarToggle">
+                        <button class="topbar-btn d-md-none max-sm:flex max-sm:min-h-[44px]" id="sidebarToggle">
                             <i class="fas fa-bars"></i>
                         </button>
                         <a href="#" class="topbar-btn">
@@ -745,7 +745,7 @@
                         @endphp
 
                         <div class="language-dropdown" style="position: relative;">
-                            <button class="topbar-btn language-toggle" onclick="toggleLanguageDropdown()"
+                            <button class="topbar-btn language-toggle max-sm:min-h-[44px]" onclick="toggleLanguageDropdown()"
                                 style="cursor: pointer; display: flex; align-items: center; gap: 6px;">
                                 <span style="font-size: 16px;">{{ $languages[$currentLocale]['flag'] }}</span>
                                 <span
@@ -762,7 +762,7 @@
                                         @csrf
                                         <input type="hidden" name="locale" value="{{ $code }}">
                                         <button type="submit"
-                                            class="language-option {{ $currentLocale === $code ? 'active' : '' }}"
+                                            class="language-option max-sm:min-h-[44px] {{ $currentLocale === $code ? 'active' : '' }}"
                                             style="width: 100%; padding: 10px 14px; border: none; background: {{ $currentLocale === $code ? '#fef3c7' : 'none' }}; cursor: pointer; display: flex; align-items: center; gap: 10px; text-align: left; font-size: 13px; color: {{ $currentLocale === $code ? '#92400e' : 'var(--text-muted)' }}; transition: background 0.15s;">
                                             <span style="font-size: 16px;">{{ $lang['flag'] }}</span>
                                             <span

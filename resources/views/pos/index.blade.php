@@ -977,7 +977,7 @@
             </div>
             <div class="pos-header-divider"></div>
             <span class="pos-date" id="pos-date"></span>
-            <div class="search-wrap">
+            <div class="search-wrap max-sm:w-full">
                 <span class="search-icon">
                     <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
                         <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.5" />
@@ -987,7 +987,7 @@
                 <input type="text" id="search-product" placeholder="{{ __('main.search_products') }}">
             </div>
             {{-- Mobile cart toggle button --}}
-            <button class="cart-toggle-btn" id="cart-toggle-btn" aria-label="View order">
+            <button class="cart-toggle-btn max-sm:min-h-[44px]" id="cart-toggle-btn" aria-label="View order">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                     <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                     <line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
@@ -1002,14 +1002,14 @@
 
             {{-- Category filter --}}
             <div class="cat-strip">
-                <button class="cat-pill active filter-cat" data-cat="all">{{ __('main.all_items') }}</button>
+                <button class="cat-pill active filter-cat max-sm:min-h-[44px]" data-cat="all">{{ __('main.all_items') }}</button>
                 @foreach($categories as $cat)
-                    <button class="cat-pill filter-cat" data-cat="{{ $cat->id }}">{{ $cat->name }}</button>
+                    <button class="cat-pill filter-cat max-sm:min-h-[44px]" data-cat="{{ $cat->id }}">{{ $cat->name }}</button>
                 @endforeach
             </div>
 
             {{-- Product grid --}}
-            <div class="product-grid" id="product-grid">
+            <div class="product-grid max-sm:grid-cols-2" id="product-grid">
                 @foreach($products as $product)
                     <div class="product-card product-item {{ $product->stock <= 0 ? 'out-of-stock' : '' }}"
                         data-cat="{{ $product->category_id }}" data-name="{{ strtolower($product->name) }}"
@@ -1042,13 +1042,13 @@
         </div>
 
         {{-- ── RIGHT: CART ── --}}
-        <div class="pos-right" id="pos-right">
+        <div class="pos-right max-sm:fixed max-sm:bottom-0 max-sm:w-full max-sm:h-[85vh] max-sm:rounded-t-2xl max-sm:z-[350] max-sm:translate-y-full" id="pos-right">
 
             <div class="cart-header">
                 <span class="cart-title">{{ __('main.current_order') }}</span>
                 <div class="cart-header-right">
                     <span class="cart-count" id="cart-count">0</span>
-                    <button class="cart-close-btn" id="cart-close-btn" aria-label="Close order panel">
+                    <button class="cart-close-btn max-sm:min-h-[44px]" id="cart-close-btn" aria-label="Close order panel">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
@@ -1101,14 +1101,14 @@
                     <span class="change-amount" id="val-change">$ 0.00</span>
                 </div>
 
-                <button class="checkout-btn" id="checkout-btn" disabled>
+                <button class="checkout-btn max-sm:min-h-[44px]" id="checkout-btn" disabled>
                     <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
                         <path d="M2 8h12M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
                             stroke-linejoin="round" />
                     </svg>
                     {{ __('main.process_checkout') }}
                 </button>
-                <button class="clear-btn" onclick="clearCart()">{{ __('main.clear_order') }}</button>
+                <button class="clear-btn max-sm:min-h-[44px]" onclick="clearCart()">{{ __('main.clear_order') }}</button>
 
             </div>
         </div>
@@ -1259,9 +1259,9 @@
                         <div class="cart-item-unit">${item.price.toFixed(2)} ${posTranslations.each}</div>
                     </div>
                     <div class="qty-ctrl">
-                        <button class="qty-btn" onclick="changeQty(${item.id}, -1)" aria-label="Decrease">−</button>
+                        <button class="qty-btn max-sm:min-h-[44px]" onclick="changeQty(${item.id}, -1)" aria-label="Decrease">−</button>
                         <span class="qty-num">${item.quantity}</span>
-                        <button class="qty-btn" onclick="changeQty(${item.id}, 1)" aria-label="Increase">+</button>
+                        <button class="qty-btn max-sm:min-h-[44px]" onclick="changeQty(${item.id}, 1)" aria-label="Increase">+</button>
                     </div>
                     <div class="cart-item-total">${itemTotal.toFixed(2)}</div>
                 `;

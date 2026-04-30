@@ -578,16 +578,16 @@
             </div>
 
             <div class="header-right">
-                <form action="{{ route('customers.index') }}" method="GET" class="search-form">
+                <form action="{{ route('customers.index') }}" method="GET" class="search-form max-sm:w-full">
                     <span class="search-icon">
                         <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
                             <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.6" />
                             <path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
                         </svg>
                     </span>
-                    <input type="text" name="search" placeholder="{{ __('main.search_by_name_phone') }}"
+                    <input type="text" name="search" class="max-sm:w-full" placeholder="{{ __('main.search_by_name_phone') }}"
                         value="{{ request('search') }}">
-                    <button type="submit" class="search-submit">
+                    <button type="submit" class="search-submit max-sm:min-h-[44px]">
                         <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
                             <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
                                 stroke-linejoin="round" />
@@ -595,7 +595,7 @@
                     </button>
                 </form>
 
-                <button class="add-btn" onclick="prepareModal('add')">
+                <button class="add-btn max-sm:min-h-[44px]" onclick="prepareModal('add')">
                     <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
                         <path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                     </svg>
@@ -606,7 +606,7 @@
 
         {{-- ── TABLE CARD ── --}}
         <div class="table-card">
-            <div style="overflow-x: auto;">
+            <div style="overflow-x: auto;" class="max-sm:overflow-x-auto">
                 <table class="cust-table">
                     <thead>
                         <tr>
@@ -660,7 +660,7 @@
                                 {{-- Actions --}}
                                 <td>
                                     <div class="action-cell">
-                                        <button class="act-btn edit"
+                                        <button class="act-btn edit max-sm:min-h-[44px]"
                                             onclick="prepareModal('edit', {{ json_encode($customer) }})">
                                             <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
                                                 <path d="M11.5 2.5l2 2L5 13H3v-2L11.5 2.5z" stroke="currentColor"
@@ -673,7 +673,7 @@
                                             style="display:inline;"
                                             onsubmit="return confirm('{{ __('main.confirm_delete_customer') }}')">
                                             @csrf @method('DELETE')
-                                            <button type="submit" class="act-btn delete">
+                                            <button type="submit" class="act-btn delete max-sm:min-h-[44px]">
                                                 <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
                                                     <path d="M3 5h10M6 5V3h4v2M6 8v5M10 8v5" stroke="currentColor"
                                                         stroke-width="1.4" stroke-linecap="round" />
@@ -723,7 +723,7 @@
         <div class="m-box">
             <div class="m-header">
                 <h2 class="m-title" id="modalTitle">{{ __('main.customer_information') }}</h2>
-                <button class="m-close" onclick="closeModal()">
+                <button class="m-close max-sm:min-h-[44px]" onclick="closeModal()">
                     <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
                         <path d="M2 2l12 12M14 2L2 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
                     </svg>
@@ -759,8 +759,8 @@
                 </div>
 
                 <div class="m-footer">
-                    <button type="button" class="m-cancel" onclick="closeModal()">{{ __('main.cancel') }}</button>
-                    <button type="submit" class="m-submit" id="btnSubmit">{{ __('main.save_record') }}</button>
+                    <button type="button" class="m-cancel max-sm:min-h-[44px]" onclick="closeModal()">{{ __('main.cancel') }}</button>
+                    <button type="submit" class="m-submit max-sm:min-h-[44px]" id="btnSubmit">{{ __('main.save_record') }}</button>
                 </div>
             </form>
         </div>
